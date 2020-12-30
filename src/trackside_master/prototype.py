@@ -14,6 +14,8 @@ class App(Framework):
 
     def __init__(self):
         super().__init__()
+
+        ## Test test.
         self._app = None
 
     def _initialise(self):
@@ -22,8 +24,10 @@ class App(Framework):
     def _main_loop(self):
         print('_initialise() called')
 
-def main():
-    """ Main entry point """
+def main() -> None:
+    """!@brief Main entry point
+    @return None
+    """
 
     app = App()
 
