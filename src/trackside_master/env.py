@@ -9,4 +9,5 @@ the Free Software Foundation, either version 3 of the License, or
 import sys
 sys.path.insert(0,'.')
 
+##  Version of the Trackside Master service
 MASTER_VERSION = 'v0.0.0'
