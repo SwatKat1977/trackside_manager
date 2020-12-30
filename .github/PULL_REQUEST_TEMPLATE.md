@@ -22,9 +22,8 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 
 **Test Configuration**:
 * Version:
+* Component(s):
 * Hardware:
-* Toolchain:
-* SDK:
 
 # Checklist:
 
