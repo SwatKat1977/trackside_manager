@@ -11,17 +11,19 @@ class Framework:
     """ Service framework class."""
 
     @property
-    def is_running(self):
+    def is_running(self) -> bool:
         """!@brief is_running property (getter).
         @param self The object pointer.
+        @return True if running, else False.
         """
         return self._is_running
 
     @is_running.setter
-    def is_running(self, value):
+    def is_running(self, value) -> None:
         """!@brief is_running property (setter).
         @param self The object pointer.
         @param value New value for property.
+        @return None
         """
         self._is_running = value
 
@@ -31,10 +33,11 @@ class Framework:
         """
         self._is_running = False
 
-    def run(self):
+    def run(self) -> None:
         """!@brief ** Overridable 'run' function **
         Start the application.
         @param self The object pointer.
+        @return None
         """
 
         # Initialise the application and then run main loop if initialised.
@@ -45,20 +48,22 @@ class Framework:
         # Perform any shutdown required.
         self._shutdown()
 
-    def _initialise(self):
+    def _initialise(self) -> bool:
         """!@brief Overridable 'initialise' function **
         @param self The object pointer.
         @return True if initialise was successful, otherwise False.
         """
         raise NotImplementedError("Requires implementing")
 
-    def _main_loop(self):
+    def _main_loop(self) -> None:
         """!@brief Overridable 'main loop' function **
         @param self The object pointer.
+        @return None
         """
         raise NotImplementedError("Requires implementing")
 
-    def _shutdown(self):
+    def _shutdown(self) -> None:
         """!@brief Overridable 'shutdown' function **
         @param self The object pointer.
+        @return None
         """
