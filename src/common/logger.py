@@ -13,18 +13,39 @@ import time
 
 class LogType(enum.Enum):
     """ Enumeration of log type """
-    Debug = 0
-    Info = 1
-    Warn = 2
-    Error = 3
-    Critical = 4
 
+    ## Information that is diagnostically helpful to people more than just
+    #  developers (IT, sysadmins, etc.).
+    Debug = 0
+
+    ## Generally useful information to log (service start/stop, configuration
+    #  assumptions, etc). Info I want to always have available but usually
+    #  don't care about under normal circumstances.
+    Info = 1
+
+    ## Anything that can potentially cause application oddities, but for which
+    #  I am automatically recovering. (Such as switching from a primary to
+    #  backup server, retrying an operation, missing secondary data, etc.)
+    Warn = 2
+
+    ## Any error which is fatal to the operation, but not the service or
+    #  application (can't open a required file, missing data, etc.). These
+    #  errors will force user (administrator, or direct user) intervention.
+    Error = 3
+
+    ## Any error that is forcing a shutdown of the service or application to
+    #  prevent data loss (or further data loss). I reserve these only for the
+    #  most heinous errors and situations where there is guaranteed to have
+    #  been data corruption or loss.
+    Critical = 4
 
 class Logger:
     """ Logger class that can write to a console or an external logger """
+    ## Static list of attributes for the Logger class.
     __slots__ = ['_external_logger', '_is_initialised', '_logger_instance',
                  '_write_to_console']
 
+    ## Mapping of human-readable log type to the Python logging type.
     Logger_mappings = {
         LogType.Debug : ('debug', logging.DEBUG),
         LogType.Error : ('error', logging.ERROR),
@@ -71,9 +92,13 @@ class Logger:
         """!@brief Default constructor.
         @param self The object pointer.
         """
+        ## External logger function.
         self._external_logger = None
+        ## Boolean to specify if logger is initialised.
         self._is_initialised = False
+        ## Instance of the internal Python logging system being wrapped.
         self._logger_instance = None
+        ## Boolean to specify if writing to the console is enabled.
         self._write_to_console = False
 
     def initialise(self) -> None:
