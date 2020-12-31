@@ -14,15 +14,16 @@ from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 
 class TracksideMaster(Framework):
-    """ tbd """
+    """ Trackside master framework class """
 
     def __init__(self):
         super().__init__()
 
+        ## Instance of the logging wrapper class.
         self._logger = Logger()
 
-        ## Test test.
-        self._app = None
+        ## Default is_running (inherited from Framework class) to not running.
+        self.is_running = False
 
     def _initialise(self):
         self._logger.write_to_console = True
@@ -41,7 +42,13 @@ class TracksideMaster(Framework):
     def _main_loop(self):
         pass
 
-    def _signal_handler(self, signum, frame):
+    def _signal_handler(self, signum, frame) -> None:
+        """!@brief Handle signals (e.g. ctrl-c) and process them.
+        @param self The object pointer.
+        @param signum Unused
+        @param frame Unused
+        @return None
+        """
         #pylint: disable=unused-argument
 
         self._logger.log(LogType.Info, 'Shutting down...')
