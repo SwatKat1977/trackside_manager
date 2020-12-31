@@ -6,8 +6,9 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
-import sys
-sys.path.insert(0,'.')
 
-## Title text logged during initialisation.
-TITLE_TEXT = 'Trackside Manager Master Service'
+VERSION = 'V0.0.0'
+
+COPYRIGHT_TEXT = 'Copyright 2020 Secure Shed Project Dev Team'
+
+LICENSE_TEXT = 'Licensed under the GNU General Public License version 3'
