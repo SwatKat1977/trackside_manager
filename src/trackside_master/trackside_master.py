@@ -8,30 +8,35 @@ the Free Software Foundation, either version 3 of the License, or
 '''
 import env
 from common.framework import Framework
+from common.logger import Logger
 
-class App(Framework):
+class TracksideMaster(Framework):
     """ tbd """
 
     def __init__(self):
         super().__init__()
+
+        self._logger = Logger()
 
         ## Test test.
         self._app = None
 
     def _initialise(self):
         print('_initialise() called')
+        self._is_running = True
+        return True
 
     def _main_loop(self):
-        print('_initialise() called')
+        print('_main_loop() called')
 
 def main() -> None:
     """!@brief Main entry point
     @return None
     """
+    app = TracksideMaster()
 
-    app = App()
+    app.run()
 
     print(f'Master version: {env.MASTER_VERSION}')
-    print(app.is_running)
 
 main()
