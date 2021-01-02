@@ -6,55 +6,35 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
-import signal
+#pylint: disable=wrong-import-position
 import sys
-from env import TITLE_TEXT
-from common.framework import Framework
-from common.logger import Logger, LogType
-from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
+sys.path.insert(0,'.')
+from quart import Quart
+from .service import Service
 
-class TracksideMaster(Framework):
-    """ Trackside master framework class """
+app = Quart(__name__)
 
-    def __init__(self):
-        super().__init__()
+service = Service()
 
-        ## Instance of the logging wrapper class.
-        self._logger = Logger()
+if not service.initialise():
+    sys.exit()
 
-        ## Default is_running (inherited from Framework class) to not running.
-        self.is_running = False
+service.run()
 
-    def _initialise(self):
-        self._logger.write_to_console = True
-        self._logger.initialise()
+# ## Flask startup function.
+# #  @param test_config Unused.
+# def create_app(test_config=None) -> Quart:
+#     """!@brief is_running property (setter).
+#     @param test_config Configuration that defaults to None.
+#     @return Quart application
+#     """
 
-        signal.signal(signal.SIGINT, self._signal_handler)
+#     #app = TracksideMaster()
+#     #app.run()
 
-        self._logger.log(LogType.Info, f'{TITLE_TEXT} {VERSION}')
-        self._logger.log(LogType.Info, COPYRIGHT_TEXT)
-        self._logger.log(LogType.Info, LICENSE_TEXT)
+#     return app
 
-        self.is_running = True
-
-        return True
-
-    def _main_loop(self):
-        pass
-
-    def _signal_handler(self, signum, frame) -> None:
-        """!@brief Handle signals (e.g. ctrl-c) and process them.
-        @param self The object pointer.
-        @param signum Unused
-        @param frame Unused
-        @return None
-        """
-        #pylint: disable=unused-argument
-
-        self._logger.log(LogType.Info, 'Shutting down...')
-        self._shutdown()
-        sys.exit(1)
-
+'''
 def main() -> None:
     """!@brief Main entry point
     @return None
@@ -64,3 +44,4 @@ def main() -> None:
     app.run()
 
 main()
+'''

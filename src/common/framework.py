@@ -11,27 +11,21 @@ class Framework:
     """ Service framework class."""
 
     @property
-    def is_running(self) -> bool:
-        """!@brief is_running property (getter).
+    def shutdown_completed(self) -> bool:
+        """!@brief shutdown_completed property (getter).
         @param self The object pointer.
-        @return True if running, else False.
+        @return True if shutdown has completed, else False.
         """
-        return self._is_running
-
-    @is_running.setter
-    def is_running(self, value) -> None:
-        """!@brief is_running property (setter).
-        @param self The object pointer.
-        @param value New value for property.
-        @return None
-        """
-        self._is_running = value
+        return self._shutdown_completed
 
     def __init__(self):
         """!@brief Default constructor.
         @param self The object pointer.
         """
-        self._is_running = False
+
+        self._is_initialised = False
+        self._shutdown_completed = False
+        self._shutdown_requested = False
 
     def run(self) -> None:
         """!@brief ** Overridable 'run' function **
@@ -40,16 +34,20 @@ class Framework:
         @return None
         """
 
-        # Initialise the application and then run main loop if initialised.
-        if self._initialise():
-            while self._is_running:
-                self._main_loop()
+        if not self._is_initialised:
+            raise RuntimeError('Not initialised')
+
+        while not self._shutdown_requested:
+            self._main_loop()
+
+        self._shutdown_completed = True
 
         # Perform any shutdown required.
         self._shutdown()
 
-    def _initialise(self) -> bool:
+    def initialise(self) -> bool:
         """!@brief Overridable 'initialise' function **
+        Successful initialisation should set self._initialised to True.
         @param self The object pointer.
         @return True if initialise was successful, otherwise False.
         """
