@@ -14,32 +14,13 @@ from .service import Service
 
 app = Quart(__name__)
 
-service = Service()
-
-if not service.start():
-    sys.exit()
-
-# ## Flask startup function.
-# #  @param test_config Unused.
-# def create_app(test_config=None) -> Quart:
-#     """!@brief is_running property (setter).
-#     @param test_config Configuration that defaults to None.
-#     @return Quart application
-#     """
-
-#     #app = TracksideMaster()
-#     #app.run()
-
-#     return app
-
-'''
 def main() -> None:
     """!@brief Main entry point
     @return None
     """
-    app = TracksideMaster()
+    service = Service()
 
-    app.run()
+    if not service.start():
+        sys.exit()
 
 main()
-'''
