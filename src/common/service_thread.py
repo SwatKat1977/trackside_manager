@@ -7,8 +7,8 @@ the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
 
-class Framework:
-    """ Service framework class."""
+class ServiceThread:
+    """ Service thread class."""
 
     @property
     def shutdown_completed(self) -> bool:
