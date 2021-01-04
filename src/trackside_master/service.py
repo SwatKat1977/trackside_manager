@@ -8,26 +8,20 @@ the Free Software Foundation, either version 3 of the License, or
 '''
 import signal
 import sys
-from common.framework import Framework
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 
 ## Title text logged during initialisation.
 TITLE_TEXT = 'Trackside Manager Master Service'
 
-class Service(Framework):
+class Service:
     """ Trackside master service class """
 
     def __init__(self):
-        super().__init__()
-
         ## Instance of the logging wrapper class.
         self._logger = Logger()
 
-        ## Default is_running (inherited from Framework class) to not running.
-        self.is_running = False
-
-    def initialise(self):
+    def start(self):
         self._logger.write_to_console = True
         self._logger.initialise()
 
@@ -37,14 +31,7 @@ class Service(Framework):
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
 
-        self._is_initialised = True
-        #self.is_running = True
-
         return True
-
-    def _main_loop(self):
-        while True:
-            pass
 
     def _signal_handler(self, signum, frame) -> None:
         """!@brief Handle signals (e.g. ctrl-c) and process them.
@@ -55,7 +42,9 @@ class Service(Framework):
         """
         #pylint: disable=unused-argument
 
-        self._logger.log(LogType.Info, 'Shutting down...')
+        self._logger.log(LogType.Info, 'Signal caught...')
         self._shutdown()
-        sys.exit(1)
 
+    def _shutdown(self):
+        self._logger.log(LogType.Info, 'Shutting down...')
+        sys.exit(1)

@@ -16,10 +16,8 @@ app = Quart(__name__)
 
 service = Service()
 
-if not service.initialise():
+if not service.start():
     sys.exit()
-
-service.run()
 
 # ## Flask startup function.
 # #  @param test_config Unused.
