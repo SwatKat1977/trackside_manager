@@ -10,6 +10,7 @@ import signal
 import sys
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
+from .master_thread import MasterThread
 
 ## Title text logged during initialisation.
 TITLE_TEXT = 'Trackside Manager Master Service'
@@ -21,6 +22,12 @@ class Service:
         ## Instance of the logging wrapper class.
         self._logger = Logger()
 
+        self._master_thread = None
+
+    def __del__(self):
+        # body of destructor
+        print('goooo')
+
     def start(self):
         self._logger.write_to_console = True
         self._logger.initialise()
@@ -30,6 +37,15 @@ class Service:
         self._logger.log(LogType.Info, f'{TITLE_TEXT} {VERSION}')
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
+
+        # Create the IO processing thread which handles IO requests from
+        # hardware devices.
+        self._master_thread = MasterThread(self._logger)
+
+        if not self._master_thread.initialise():
+            return False
+
+        self._master_thread.start()
 
         return True
 
@@ -44,7 +60,7 @@ class Service:
 
         self._logger.log(LogType.Info, 'Signal caught...')
         self._shutdown()
+        sys.exit(1)
 
     def _shutdown(self):
         self._logger.log(LogType.Info, 'Shutting down...')
-        sys.exit(1)
