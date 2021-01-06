@@ -14,11 +14,12 @@ from .service import Service
 
 app = Quart(__name__)
 
+service = Service()
+
 def main() -> None:
     """!@brief Main entry point
     @return None
     """
-    service = Service()
 
     if not service.start():
         sys.exit()

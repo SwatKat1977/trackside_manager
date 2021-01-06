@@ -6,8 +6,10 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
+import asyncio
 import signal
 import sys
+from threading import Thread
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from .master_thread import MasterThread
@@ -22,11 +24,11 @@ class Service:
         ## Instance of the logging wrapper class.
         self._logger = Logger()
 
+        self._master_thread_class = MasterThread(self._logger)
         self._master_thread = None
 
     def __del__(self):
-        # body of destructor
-        print('goooo')
+        self._logger.log(LogType.Info, 'Service has been destroyed..')
 
     def start(self):
         self._logger.write_to_console = True
@@ -38,13 +40,12 @@ class Service:
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
 
-        # Create the IO processing thread which handles IO requests from
-        # hardware devices.
-        self._master_thread = MasterThread(self._logger)
-
-        if not self._master_thread.initialise():
+        if not self._master_thread_class.initialise():
             return False
 
+        loop = asyncio.get_event_loop()
+        self._master_thread = Thread(target=self._master_thread_class.run,
+                                     args=(loop,))
         self._master_thread.start()
 
         return True

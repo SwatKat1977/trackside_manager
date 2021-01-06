@@ -15,6 +15,9 @@ class MasterThread(ServiceThread):
         super().__init__()
         self._logger = logger
 
+    def __del__(self):
+        self._logger.log(LogType.Info, 'MasterThread was deleted')
+
     def initialise(self) -> bool:
         self._logger.log(LogType.Info, 'init')
 
