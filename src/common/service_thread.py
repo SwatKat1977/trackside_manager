@@ -6,6 +6,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
+import asyncio
 
 class ServiceThread:
     """ Service thread class."""
@@ -27,7 +28,7 @@ class ServiceThread:
         self._shutdown_completed = False
         self._shutdown_requested = False
 
-    def run(self) -> None:
+    def run(self, loop) -> None:
         """!@brief ** Overridable 'run' function **
         Start the application.
         @param self The object pointer.
@@ -37,13 +38,8 @@ class ServiceThread:
         if not self._is_initialised:
             raise RuntimeError('Not initialised')
 
-        while not self._shutdown_requested:
-            self._main_loop()
-
-        self._shutdown_completed = True
-
-        # Perform any shutdown required.
-        self._shutdown()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(self._async_entrypoint())
 
     def initialise(self) -> bool:
         """!@brief Overridable 'initialise' function **
@@ -52,6 +48,16 @@ class ServiceThread:
         @return True if initialise was successful, otherwise False.
         """
         raise NotImplementedError("Requires implementing")
+
+    @asyncio.coroutine
+    def _async_entrypoint(self) ->None:
+        while not self._shutdown_requested:
+            self._main_loop()
+
+        self._shutdown_completed = True
+
+        # Perform any shutdown required.
+        self._shutdown()
 
     def _main_loop(self) -> None:
         """!@brief Overridable 'main loop' function **
