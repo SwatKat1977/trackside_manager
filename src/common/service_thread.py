@@ -56,6 +56,12 @@ class ServiceThread:
         return self._initialise()
 
     def signal_shutdown_requested(self):
+        """!@brief Signal that the service should be shutdown.  This is a
+        request and only once shutdown_complete is set True is it actually
+        done.
+        @param self The object pointer.
+        @return None
+        """
         self._shutdown_requested = True
 
     def _initialise(self) -> bool:

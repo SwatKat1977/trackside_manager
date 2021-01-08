@@ -13,8 +13,10 @@ sys.path.insert(0,'.')
 from quart import Quart
 from .service import Service
 
+## Quart application instance
 app = Quart(__name__)
 
+## Trackside Master service instance, this contains the code that is executed
 service = Service()
 
 @app.before_serving

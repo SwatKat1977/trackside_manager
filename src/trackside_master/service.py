@@ -21,8 +21,11 @@ class Service(ServiceThread):
     def __init__(self):
         super().__init__()
 
-        ## Instance of the logging wrapper class.
+        ## Instance of the logging wrapper class
         self._logger = Logger()
+
+        ## _is_initialised is inherited from parent class ServiceThread
+        self._is_initialised = False
 
     def _initialise(self) -> bool:
         self._logger.write_to_console = True
