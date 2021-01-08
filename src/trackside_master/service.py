@@ -6,8 +6,6 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
-import asyncio
-import sys
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from common.service_thread import ServiceThread
