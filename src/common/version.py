@@ -6,8 +6,12 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
-import sys
-sys.path.insert(0,'.')
 
-##  Version of the Trackside Master service
-MASTER_VERSION = 'v0.0.0'
+## Version of Trackside Manager System
+VERSION = 'V0.0.0'
+
+## Copyright text logged on initialisation etc.
+COPYRIGHT_TEXT = 'Copyright 2020 Secure Shed Project Dev Team'
+
+## License text logged on initialisation etc.
+LICENSE_TEXT = 'Licensed under the GNU General Public License version 3'
