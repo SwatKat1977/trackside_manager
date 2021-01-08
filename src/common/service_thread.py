@@ -28,7 +28,7 @@ class ServiceThread:
         self._shutdown_completed = False
         self._shutdown_requested = False
 
-    def run(self, loop) -> None:
+    async def start(self) -> None:
         """!@brief ** Overridable 'run' function **
         Start the application.
         @param self The object pointer.
@@ -38,10 +38,27 @@ class ServiceThread:
         if not self._is_initialised:
             raise RuntimeError('Not initialised')
 
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(self._async_entrypoint())
+        while not self._shutdown_requested:
+            await self._main_loop()
+            await asyncio.sleep(0.1)
+
+        self._shutdown_completed = True
+
+        # Perform any shutdown required.
+        self._shutdown()
 
     def initialise(self) -> bool:
+        """!@brief Service initialisation function
+        Successful initialisation should set self._initialised to True.
+        @param self The object pointer.
+        @return True if initialise was successful, otherwise False.
+        """
+        return self._initialise()
+
+    def signal_shutdown_requested(self):
+        self._shutdown_requested = True
+
+    def _initialise(self) -> bool:
         """!@brief Overridable 'initialise' function **
         Successful initialisation should set self._initialised to True.
         @param self The object pointer.
@@ -49,21 +66,7 @@ class ServiceThread:
         """
         raise NotImplementedError("Requires implementing")
 
-    def signal_shutdown_requested(self):
-        self._shutdown_requested = True
-
-    @asyncio.coroutine
-    def _async_entrypoint(self) -> None:
-        while not self._shutdown_requested:
-            self._main_loop()
-
-        print('thread has completed........................')
-        self._shutdown_completed = True
-
-        # Perform any shutdown required.
-        self._shutdown()
-
-    def _main_loop(self) -> None:
+    async def _main_loop(self) -> None:
         """!@brief Overridable 'main loop' function **
         @param self The object pointer.
         @return None
