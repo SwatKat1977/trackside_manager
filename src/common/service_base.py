@@ -8,8 +8,8 @@ the Free Software Foundation, either version 3 of the License, or
 '''
 import asyncio
 
-class ServiceThread:
-    """ Service thread class."""
+class ServiceBase:
+    """ Service base class."""
 
     @property
     def shutdown_completed(self) -> bool:

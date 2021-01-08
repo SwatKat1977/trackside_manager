@@ -8,12 +8,12 @@ the Free Software Foundation, either version 3 of the License, or
 '''
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
-from common.service_thread import ServiceThread
+from common.service_base import ServiceBase
 
 ## Title text logged during initialisation.
 TITLE_TEXT = 'Trackside Manager Master Service'
 
-class Service(ServiceThread):
+class Service(ServiceBase):
     """ Trackside master service class """
 
     def __init__(self):
