@@ -49,11 +49,15 @@ class ServiceThread:
         """
         raise NotImplementedError("Requires implementing")
 
+    def signal_shutdown_requested(self):
+        self._shutdown_requested = True
+
     @asyncio.coroutine
-    def _async_entrypoint(self) ->None:
+    def _async_entrypoint(self) -> None:
         while not self._shutdown_requested:
             self._main_loop()
 
+        print('thread has completed........................')
         self._shutdown_completed = True
 
         # Perform any shutdown required.
