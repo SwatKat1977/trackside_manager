@@ -27,4 +27,4 @@ jobs:
       run: |
         cd src
         export PYTHONPATH=`pwd`/trackside_master
-        python ../pipelines/lint.py --path trackside_master --threshold 8
+        python ../pipelines/lint.py --path trackside_master --threshold 10
