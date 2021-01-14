@@ -27,6 +27,7 @@ class Service(ServiceBase):
         self._is_initialised = False
 
         self._quart_app = quart_app
+        self._utilities_api = None
 
     def _initialise(self) -> bool:
         self._logger.write_to_console = True
@@ -36,7 +37,7 @@ class Service(ServiceBase):
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
 
-        self._utilities_api = UtilitiesApi(self._quart_app)
+        self._utilities_api = UtilitiesApi(self._quart_app, None)
 
         self._is_initialised = True
 

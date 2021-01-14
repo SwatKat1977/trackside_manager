@@ -15,10 +15,12 @@ from common.mime_type import MIMEType
 HEADERKEY_AUTH = 'AuthKey'
 
 class UtilitiesApi:
+    __slots__ = ['_auth_key', '_configuration', '_interface']
 
-    def __init__(self, interface_instance):
+    def __init__(self, interface_instance, configuration):
         self._interface = interface_instance
         self._auth_key = 'TesT_KeY@{2021}'
+        self._configuration = configuration
 
         # Add route : /utilities/ping
         self._interface.add_url_rule('/utilities/ping',
