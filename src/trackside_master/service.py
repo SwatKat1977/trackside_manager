@@ -9,6 +9,7 @@ the Free Software Foundation, either version 3 of the License, or
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from common.service_base import ServiceBase
+from .api.utilities import UtilitiesApi
 
 ## Title text logged during initialisation.
 TITLE_TEXT = 'Trackside Manager Master Service'
@@ -16,7 +17,7 @@ TITLE_TEXT = 'Trackside Manager Master Service'
 class Service(ServiceBase):
     """ Trackside master service class """
 
-    def __init__(self):
+    def __init__(self, quart_app):
         super().__init__()
 
         ## Instance of the logging wrapper class
@@ -25,6 +26,8 @@ class Service(ServiceBase):
         ## _is_initialised is inherited from parent class ServiceThread
         self._is_initialised = False
 
+        self._quart_app = quart_app
+
     def _initialise(self) -> bool:
         self._logger.write_to_console = True
         self._logger.initialise()
@@ -32,6 +35,8 @@ class Service(ServiceBase):
         self._logger.log(LogType.Info, f'{TITLE_TEXT} {VERSION}')
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
+
+        self._utilities_api = UtilitiesApi(self._quart_app)
 
         self._is_initialised = True
 
