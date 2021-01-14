@@ -15,11 +15,10 @@ from common.mime_type import MIMEType
 HEADERKEY_AUTH = 'AuthKey'
 
 class UtilitiesApi:
-    __slots__ = ['_auth_key', '_configuration', '_interface']
+    __slots__ = ['_configuration', '_interface']
 
     def __init__(self, interface_instance, configuration):
         self._interface = interface_instance
-        self._auth_key = 'TesT_KeY@{2021}'
         self._configuration = configuration
 
         # Add route : /utilities/ping
@@ -69,7 +68,7 @@ class UtilitiesApi:
 
         # Verify the authorisation key against what is specified in the
         # configuration file.  If it isn't valid then return 403 (Forbidden).
-        if authorisation_key != self._auth_key:
+        if authorisation_key != self._configuration.api_settings.auth_key:
             return HTTPStatusCode.Forbidden
 
         return HTTPStatusCode.OK
