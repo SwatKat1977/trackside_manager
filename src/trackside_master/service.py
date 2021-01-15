@@ -10,7 +10,8 @@ from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from common.service_base import ServiceBase
 from .api.utilities import UtilitiesApi
-from .configuration import ApiSettings, Configuration
+from .configuration import Configuration
+from .configuration_manager import ConfigurationManager
 
 ## Title text logged during initialisation.
 TITLE_TEXT = 'Trackside Manager Master Service'
@@ -39,9 +40,13 @@ class Service(ServiceBase):
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
 
-        api_settings = ApiSettings('TesT_KeY@{2021}')
-        self._config = Configuration(api_settings)
-        self._utilities_api = UtilitiesApi(self._quart_app, self._config)
+        config_manager = ConfigurationManager()
+
+        config = config_manager.parse_config_file('../configurations/master/config.json')
+
+        if not config:
+            self._logger.log(LogType.Error, config_manager.last_error_msg)
+            return False
 
         self._is_initialised = True
 

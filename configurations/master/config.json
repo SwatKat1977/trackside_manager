@@ -1,1 +1,7 @@
-
+{
+    "api settings":
+    {
+        "authentication key": "string",
+        "use authentication": true
+    }
+}

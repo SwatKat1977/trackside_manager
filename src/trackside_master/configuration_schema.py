@@ -38,7 +38,7 @@ class ConfigurationSchema:
                     },
                     'use authentication':
                     {
-                        "type" : "bool"
+                        "type" : "boolean"
                     }
                 },
                 "required" : ['authentication key', 'use authentication']

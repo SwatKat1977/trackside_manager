@@ -10,14 +10,19 @@ the Free Software Foundation, either version 3 of the License, or
 class ApiSettings:
     """ Settings related to the underlying database """
     #pylint: disable=too-few-public-methods
-    __slots__ = ['_auth_key']
+    __slots__ = ['_auth_key', '_use_auth_key']
 
     @property
     def auth_key(self):
         return self._auth_key
 
-    def __init__(self, auth_key):
+    @property
+    def use_auth_key(self):
+        return self._use_auth_key
+
+    def __init__(self, auth_key, use_auth_key):
         self._auth_key = auth_key
+        self._use_auth_key = use_auth_key
 
 class Configuration:
     __slots__ = ['_api_settings']
