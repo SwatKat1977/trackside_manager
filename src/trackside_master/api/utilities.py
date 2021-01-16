@@ -9,12 +9,13 @@ the Free Software Foundation, either version 3 of the License, or
 import json
 from quart import request
 from common.http_status_code import HTTPStatusCode
-from common.logger import LogType
 from common.mime_type import MIMEType
 
 HEADERKEY_AUTH = 'AuthKey'
 
 class UtilitiesApi:
+    ''' Utilities endpoints on the API'''
+    #pylint: disable=too-few-public-methods
     __slots__ = ['_configuration', '_interface']
 
     def __init__(self, interface_instance, configuration):

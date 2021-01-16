@@ -8,8 +8,13 @@ the Free Software Foundation, either version 3 of the License, or
 '''
 
 class ConfigurationSchema:
+    ''' Definition of the configuration files JSON Schema'''
+    #pylint: disable=too-few-public-methods
 
     class Elements:
+        ''' Definition of the configuration files JSON elements'''
+        #pylint: disable=too-few-public-methods
+
         # -- Top-level json elements --
         toplevel_api_settings = 'api settings'
 

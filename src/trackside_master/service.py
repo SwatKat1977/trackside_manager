@@ -11,7 +11,6 @@ from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from common.service_base import ServiceBase
 from .api.utilities import UtilitiesApi
-from .configuration import Configuration
 from .configuration_manager import ConfigurationManager
 
 ## Title text logged during initialisation.
@@ -67,6 +66,8 @@ class Service(ServiceBase):
                          f"Auth key defined   : {auth_key_defined}")
         self._logger.log(LogType.Info,
                          f"Use authentication : {config.api_settings.use_auth_key}")
+
+        self._utilities_api = UtilitiesApi(self._quart_app, config)
 
         self._is_initialised = True
 
