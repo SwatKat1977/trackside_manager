@@ -55,6 +55,19 @@ class Service(ServiceBase):
             self._logger.log(LogType.Error, config_manager.last_error_msg)
             return False
 
+        self._logger.log(LogType.Info, "Configuration file load...")
+
+        self._logger.log(LogType.Info, "+==========================+")
+        self._logger.log(LogType.Info, "|= Configuration Settings =|")
+        self._logger.log(LogType.Info, "+==========================+")
+        self._logger.log(LogType.Info, "Api Settings =>")
+
+        auth_key_defined = 'Yes' if config.api_settings.auth_key else 'No'
+        self._logger.log(LogType.Info,
+                         f"Auth key defined   : {auth_key_defined}")
+        self._logger.log(LogType.Info,
+                         f"Use authentication : {config.api_settings.use_auth_key}")
+
         self._is_initialised = True
 
         return True
