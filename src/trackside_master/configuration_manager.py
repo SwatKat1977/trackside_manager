@@ -14,16 +14,30 @@ from .configuration_schema import ConfigurationSchema as schema
 class ConfigurationManager:
     ''' Configuration Manager '''
 
-    ## Property getter : Last error message
     @property
-    def last_error_msg(self):
+    def last_error_msg(self) -> str:
+        """!@brief Last error message (Getter).
+        @param self The object pointer.
+        @returns Last error message.
+        """
         return self._last_error_msg
 
     def __init__(self) -> object:
+        """!@brief Class constructor.
+        @param self The object pointer.
+        @returns ConfigurationManager.
+        """
         self._last_error_msg = ''
 
     def parse_config_file(self, filename) -> Configuration:
-        #  @param self The object pointer.
+        """!@brief Parse the configuration file and then very it against the
+                   JSON schema.  Once verified return an instance of the
+                   Configuration class.
+        @param self The object pointer.
+        @param filename Filename of the configuration file to read.
+        @returns Configuration if successful, otherwise on failure return None
+                 and set the Last error message.
+        """
 
         self._last_error_msg = ''
 
@@ -58,6 +72,7 @@ class ConfigurationManager:
         return Configuration(api_settings)
 
     def _process_api_settings(self, settings) -> ApiSettings:
+        #pylint: disable=no-self-use
         '''
         ## Process the api settings section.
         #  @param self The object pointer.
