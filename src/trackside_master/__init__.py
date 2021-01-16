@@ -1,5 +1,5 @@
 '''
-Copyright (C) 2020 Trackside Manager Project
+Copyright (C) 2020-2021 Trackside Manager Project
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@ from .service import Service
 app = Quart(__name__)
 
 ## Trackside Master service instance, this contains the code that is executed
-service = Service()
+service = Service(app)
 
 @app.before_serving
 async def startup() -> None:

@@ -1,0 +1,45 @@
+{
+	"info": {
+		"_postman_id": "145437d4-536a-4fc0-a418-02c36eff3b77",
+		"name": "Trackside Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Master",
+			"item": [
+				{
+					"name": "Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:2020/utilities/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "2020",
+							"path": [
+								"utilities",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
