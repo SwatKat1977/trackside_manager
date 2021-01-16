@@ -6,6 +6,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 '''
+import os
 from common.logger import Logger, LogType
 from common.version import COPYRIGHT_TEXT, LICENSE_TEXT, VERSION
 from common.service_base import ServiceBase
@@ -40,9 +41,15 @@ class Service(ServiceBase):
         self._logger.log(LogType.Info, COPYRIGHT_TEXT)
         self._logger.log(LogType.Info, LICENSE_TEXT)
 
+        config_file = os.getenv('TSM_MASTER_CONFIG')
+        if not config_file:
+            self._logger.log(LogType.Error,
+                             'TSM_MASTER_CONFIG environment variable missing!')
+            return False
+
         config_manager = ConfigurationManager()
 
-        config = config_manager.parse_config_file('../configurations/master/config.json')
+        config = config_manager.parse_config_file(config_file)
 
         if not config:
             self._logger.log(LogType.Error, config_manager.last_error_msg)
